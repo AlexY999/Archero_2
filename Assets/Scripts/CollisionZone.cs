@@ -5,7 +5,7 @@ using UnityEngine;
 public enum CollisionZoneType
 {
     Enemy,
-    Thorns
+    Thorns,
 }
 
 public class CollisionZone : MonoBehaviour

@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Action OnCoinCollected;
     public Action OnDeath;
     public Action OnWin;
+    public Action<float> OnDamage;
     
     [SerializeField] private VariableJoystick variableJoystick;
     [SerializeField] private CharacterController controller;
@@ -59,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(IsWalking, false);
         }
     }
+    
+    public void Damage(float damageValue)
+    {
+        OnDamage?.Invoke(damageValue);
+    }
 
     [ContextMenu("Attack Enemy")]
     private void AttackEnemy()
@@ -69,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject.name);   
         if (collision.gameObject.TryGetComponent<TriggerZone>(out var triggerZone))
         {
             switch (triggerZone.Type)
@@ -91,20 +96,16 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
-    private void OnCollisionStay(Collision collision)
+    
+    private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.TryGetComponent<CollisionZone>(out var collisionZone))
+        if (collision.gameObject.TryGetComponent<TriggerZone>(out var triggerZone))
         {
-            switch (collisionZone.Type)
+            switch (triggerZone.Type)
             {
-                case CollisionZoneType.Enemy:
+                case TriggerZoneType.Enemy:
                     _attack = true;
                     break;
-                case CollisionZoneType.Thorns:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }
@@ -116,19 +117,16 @@ public class PlayerMovement : MonoBehaviour
             if (_attack)
             {
                 AttackEnemy();
-                Action(Vector2.zero, attackRadius, 30);
+                Action(transform.position, attackRadius, 30);
                 yield return new WaitForSeconds(attackReload);
                 _attack = false;
             }
-            else
-            {
-                yield return null;
-            }
-            
+
+            yield return null;
         }
     }
     
-    private void Action(Vector2 point, float radius, float damage, bool allTargets = true)
+    private void Action(Vector3 point, float radius, float damage, bool allTargets = true)
     {
         Collider[] colliders = Physics.OverlapSphere(point, radius);
 

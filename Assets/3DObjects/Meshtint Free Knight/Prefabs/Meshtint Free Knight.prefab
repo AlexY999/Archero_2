@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4079118292684216}
   - component: {fileID: 95382778294392932}
-  - component: {fileID: 5864456864457591786}
+  - component: {fileID: 8361632020996620029}
   - component: {fileID: 312020529}
   - component: {fileID: 1136824965}
   - component: {fileID: 44021514512227165}
@@ -218,7 +218,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5864456864457591786
+--- !u!114 &8361632020996620029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,9 +227,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1022148595836406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 272248cbab3affc4d98b51d61d203b99, type: 3}
+  m_Script: {fileID: 11500000, guid: ab828094149890d4abf03e4750f50cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _triggerZoneType: 0
 --- !u!114 &312020529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,11 +247,11 @@ MonoBehaviour:
   controller: {fileID: 44021514512227165}
   animator: {fileID: 95382778294392932}
   speed: 2
-  attackRadius: 10
+  attackRadius: 1.5
   attackReload: 2
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!54 &1136824965
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!143 &44021514512227165
 CharacterController:

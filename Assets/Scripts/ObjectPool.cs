@@ -13,7 +13,6 @@ public class ObjectPool : MonoBehaviour
 
     public static ObjectPool SharedInstance;
     public List<Pool> pools;
-    //public bool willGrow = true;
 
     private Dictionary<string, List<GameObject>> poolDictionary;
 
@@ -22,7 +21,6 @@ public class ObjectPool : MonoBehaviour
         SharedInstance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         poolDictionary = new Dictionary<string, List<GameObject>>();
@@ -61,14 +59,6 @@ public class ObjectPool : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// return object from pool
-    /// </summary>
-    /// <param name="tag">choose from the indicated tags in the inspector</param>
-    /// <param name="createNew">if true, create new object in case there are no available, if false - return null</param>
-    /// <param name="postion"></param>
-    /// <param name="rotation"></param>
-    /// <returns></returns>
     public GameObject GetPooledObject(string tag, bool createNew, Vector3 postion, Quaternion rotation, Transform parent = null)
     {
         if (!poolDictionary.ContainsKey(tag))
@@ -77,10 +67,8 @@ public class ObjectPool : MonoBehaviour
             return null;
         }
 
-        // For as many objects as are in the pooledObjects list
         for (int i = 0; i < poolDictionary[tag].Count; i++)
         {
-            // if the pooled objects is NOT active, return that object 
             if (!poolDictionary[tag][i].activeInHierarchy)
             {
                 GameObject currObj = poolDictionary[tag][i];
@@ -104,16 +92,9 @@ public class ObjectPool : MonoBehaviour
             }
             return null;
         }
-        // otherwise, return null   
         return null;
     }
-
-    /// <summary>
-    /// return object from pool
-    /// </summary>
-    /// <param name="tag">choose from the indicated tags in the inspector</param>
-    /// <param name="createNew">if true, create new object in case there are no available, if false - return null</param>
-    /// <returns></returns>
+    
     public GameObject GetPooledObject(string tag, bool createNew, Transform parent)
     {
         if (!poolDictionary.ContainsKey(tag))
@@ -122,10 +103,8 @@ public class ObjectPool : MonoBehaviour
             return null;
         }
 
-        // For as many objects as are in the pooledObjects list
         for (int i = 0; i < poolDictionary[tag].Count; i++)
         {
-            // if the pooled objects is NOT active, return that object 
             if (!poolDictionary[tag][i].activeInHierarchy)
             {
                 GameObject currObj = poolDictionary[tag][i];
@@ -145,7 +124,7 @@ public class ObjectPool : MonoBehaviour
             }
             return null;
         }
-        // otherwise, return null   
+
         return null;
     }
 

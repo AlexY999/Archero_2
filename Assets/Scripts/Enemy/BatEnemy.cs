@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BatEnemy : EnemyScript
 {
-    [Header("Move info")] [SerializeField] private float speedMove;
+    [Header("Move info")] 
+    [SerializeField] private float speedMove;
     [SerializeField] private float distance;
     [SerializeField] private Transform bulletParentTransform;
     [SerializeField] private float speedOfBullet;
+    [SerializeField] private float bulletDamage;
     [SerializeField] private float rateOfFire = 2f;
 
     private const string bulletTag = "Bullet";
@@ -45,23 +47,13 @@ public class BatEnemy : EnemyScript
             Fire();
         }
     }
-    
+
     [ContextMenu("Fire")]
     private void Fire()
     {
         var obj = ObjectPool.SharedInstance.GetPooledObject(bulletTag, true, bulletParentTransform);
         Vector3 position = transform.position;
         obj.transform.position += position;
-        obj.transform.LookAt(player);
-        StartCoroutine(MoveBullet(obj));
-    }
-
-    IEnumerator MoveBullet(GameObject obj)
-    {
-        while (obj.activeSelf)
-        {
-            obj.transform.position += transform.forward * speedOfBullet * Time.deltaTime;
-            yield return null;
-        }
+        obj.GetComponent<BulletScript>().SetProperties(speedOfBullet, player.position, bulletDamage);
     }
 }

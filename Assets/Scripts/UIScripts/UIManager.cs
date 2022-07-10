@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
 
     private void LoadGameScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Scene1");
         asyncLoad.completed += OnMenuSceneLoadCompleted;
     }
 
